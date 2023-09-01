@@ -11,4 +11,6 @@ public interface UserBAO {
     List<UserDTO> getAllUsers(String s)throws Exception;
     void updateUser(UserDTO userDTO,Integer userID)throws Exception;
     UserDTO findByUserID(Integer Id)throws Exception;
+
+    UserDTO getUserByUsername(String username);
 }

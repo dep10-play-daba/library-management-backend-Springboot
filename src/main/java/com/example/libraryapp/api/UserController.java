@@ -23,6 +23,10 @@ public class UserController {
         if (query==null)query="";
        return userBAO.getAllUsers(query);
     }
+    @GetMapping("/{username}")
+    public UserDTO getUserByUsername(@PathVariable("username") String username) throws Exception {
+        return userBAO.getUserByUsername(username);
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "application/json")
     public void saveUser(@RequestBody UserDTO userDto) throws Exception {

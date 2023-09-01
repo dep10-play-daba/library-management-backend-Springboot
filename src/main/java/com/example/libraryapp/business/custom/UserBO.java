@@ -4,13 +4,16 @@ import com.example.libraryapp.business.UserBAO;
 import com.example.libraryapp.business.util.Transformer;
 import com.example.libraryapp.dao.UserDAO;
 import com.example.libraryapp.dto.UserDTO;
+import com.example.libraryapp.entity.MyUserDetails;
 import com.example.libraryapp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
 public class UserBO implements UserBAO {
@@ -74,5 +77,12 @@ public class UserBO implements UserBAO {
     @Override
     public UserDTO findByUserID(Integer Id) throws Exception {
         return null;
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) {
+        Optional<User> user = userDAO.findByName(username);
+        user.orElseThrow(()->new UsernameNotFoundException("Not found: "+username));
+        return transformer.toUserDTO(user.get());
     }
 }
